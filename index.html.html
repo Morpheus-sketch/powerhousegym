@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Power House Gym Kupwara</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #E8001D;
+    --dark-red: #9E0014;
+    --black: #0A0A0A;
+    --dark: #111111;
+    --card: #181818;
+    --border: #2a2a2a;
+    --white: #F5F5F5;
+    --gray: #888888;
+    --gold: #C9A84C;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    padding: 18px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 3px;
+    color: var(--white);
+  }
+
+  .nav-logo span { color: var(--red); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--red); }
+
+  .nav-cta {
+    background: var(--red);
+    color: var(--white) !important;
+    padding: 8px 20px;
+    font-weight: 600 !important;
+  }
+
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .hamburger span {
+    width: 24px;
+    height: 2px;
+    background: var(--white);
+    transition: 0.3s;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 40px 60px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 50%, rgba(232,0,29,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(232,0,29,0.06) 0%, transparent 50%),
+      linear-gradient(180deg, #0A0A0A 0%, #0f0f0f 100%);
+  }
+
+  .hero-lines {
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 80px);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(232,0,29,0.12);
+    border: 1px solid rgba(232,0,29,0.3);
+    padding: 6px 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 24px;
+    animation: fadeUp 0.6s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--red);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 10vw, 8rem);
+    line-height: 0.9;
+    letter-spacing: 2px;
+    animation: fadeUp 0.6s 0.1s ease both;
+  }
+
+  .hero h1 .red { color: var(--red); }
+  .hero h1 .outline {
+    -webkit-text-stroke: 2px var(--white);
+    color: transparent;
+  }
+
+  .hero-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin: 20px 0 40px;
+    animation: fadeUp 0.6s 0.2s ease both;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.6s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--red);
+    color: var(--white);
+    padding: 16px 36px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 700;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary:hover {
+    background: var(--dark-red);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--white);
+    padding: 16px 36px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--red);
+    color: var(--red);
+  }
+
+  .hero-stats {
+    position: absolute;
+    right: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    animation: fadeUp 0.6s 0.4s ease both;
+  }
+
+  .stat {
+    text-align: center;
+    border-left: 2px solid var(--red);
+    padding-left: 16px;
+  }
+
+  .stat-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    color: var(--white);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION COMMON */
+  section { padding: 100px 40px; }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 48px;
+  }
+
+  /* EVENT BANNER */
+  .event-banner {
+    background: var(--red);
+    padding: 20px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .event-banner-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    color: var(--white);
+  }
+
+  .event-banner-date {
+    background: var(--white);
+    color: var(--red);
+    padding: 6px 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+  }
+
+  /* ABOUT */
+  .about {
+    background: var(--dark);
+  }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .about-image-box {
+    position: relative;
+  }
+
+  .about-img-placeholder {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    color: var(--gray);
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-img-placeholder::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40%;
+    background: linear-gradient(to top, rgba(232,0,29,0.2), transparent);
+  }
+
+  .champion-badge {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    background: var(--red);
+    padding: 20px;
+    text-align: center;
+  }
+
+  .champion-badge .trophy { font-size: 1.8rem; }
+
+  .champion-badge p {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    margin-top: 4px;
+  }
+
+  .about-content p {
+    color: var(--gray);
+    line-height: 1.8;
+    margin-bottom: 20px;
+    font-size: 1rem;
+  }
+
+  .achievements {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 32px 0;
+  }
+
+  .achievement {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+  }
+
+  .achievement::before {
+    content: '🏅';
+    font-size: 1.2rem;
+  }
+
+  /* MEMBERSHIP */
+  .membership { background: var(--black); }
+
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .plan {
+    background: var(--card);
+    padding: 40px 32px;
+    position: relative;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s;
+  }
+
+  .plan:hover { border-color: var(--red); }
+
+  .plan.featured {
+    background: var(--red);
+    border-color: var(--red);
+  }
+
+  .plan-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+    margin-bottom: 8px;
+  }
+
+  .plan-duration {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 28px;
+  }
+
+  .plan.featured .plan-duration { color: rgba(255,255,255,0.8); }
+
+  .plan-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .plan-price span {
+    font-size: 1.2rem;
+    vertical-align: super;
+  }
+
+  .plan-divider {
+    width: 40px;
+    height: 2px;
+    background: rgba(255,255,255,0.2);
+    margin: 24px 0;
+  }
+
+  .plan.featured .plan-divider { background: rgba(255,255,255,0.4); }
+
+  .plan-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .plan-features li {
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .plan.featured .plan-features li { color: rgba(255,255,255,0.9); }
+
+  .plan-features li::before {
+    content: '✓';
+    color: var(--red);
+    font-weight: 700;
+  }
+
+  .plan.featured .plan-features li::before { color: var(--white); }
+
+  .plan-btn {
+    display: block;
+    text-align: center;
+    padding: 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+
+  .plan:not(.featured) .plan-btn {
+    border: 1px solid var(--border);
+    color: var(--white);
+  }
+
+  .plan:not(.featured) .plan-btn:hover {
+    background: var(--red);
+    border-color: var(--red);
+  }
+
+  .plan.featured .plan-btn {
+    background: var(--white);
+    color: var(--red);
+  }
+
+  .plan.featured .plan-btn:hover { opacity: 0.9; }
+
+  .plan-popular {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gold);
+    color: var(--black);
+    padding: 4px 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  /* SERVICES */
+  .services { background: var(--dark); }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .service-card {
+    background: var(--card);
+    padding: 36px 28px;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--red);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+
+  .service-card:hover::before { transform: scaleX(1); }
+  .service-card:hover { border-color: rgba(232,0,29,0.3); }
+
+  .service-icon {
+    font-size: 2rem;
+    margin-bottom: 16px;
+  }
+
+  .service-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.3rem;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+  }
+
+  .service-desc {
+    font-size: 0.9rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  /* SUPPLEMENTS */
+  .supplements { background: var(--black); }
+
+  .supp-inner {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .supp-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+
+  .supp-title span { color: var(--red); }
+
+  .supp-desc {
+    color: var(--gray);
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+
+  .supp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 32px;
+  }
+
+  .supp-tag {
+    border: 1px solid var(--border);
+    padding: 6px 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+  }
+
+  .supp-image {
+    background: var(--dark);
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .supp-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(232,0,29,0.1), transparent 70%);
+  }
+
+  /* EVENT */
+  .event { background: var(--dark); }
+
+  .event-card {
+    background: var(--black);
+    border: 1px solid var(--red);
+    padding: 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .event-card::before {
+    content: 'ARM WRESTLING';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 6rem;
+    color: rgba(232,0,29,0.05);
+    letter-spacing: 10px;
+    white-space: nowrap;
+  }
+
+  .event-grid {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .event-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    letter-spacing: 3px;
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  .event-title span { color: var(--red); }
+
+  .event-details {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+
+  .event-detail {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    color: var(--gray);
+  }
+
+  .event-detail strong { color: var(--white); }
+
+  .categories-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 220px;
+  }
+
+  .category {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 12px 20px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .cat-prize {
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  /* GALLERY */
+  .gallery { background: var(--black); }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 200px);
+    gap: 4px;
+  }
+
+  .gallery-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    color: var(--gray);
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+
+  .gallery-item:hover { border-color: var(--red); }
+
+  .gallery-item:first-child {
+    grid-row: span 2;
+    grid-column: span 1;
+  }
+
+  /* CONTACT */
+  .contact { background: var(--dark); }
+
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .contact-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .contact-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(232,0,29,0.1);
+    border: 1px solid rgba(232,0,29,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+
+  .contact-item-content h4 {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 6px;
+  }
+
+  .contact-item-content p {
+    font-size: 1rem;
+    color: var(--white);
+  }
+
+  .map-placeholder {
+    background: var(--card);
+    border: 1px solid var(--border);
+    height: 100%;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--gray);
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+  }
+
+  .map-placeholder span { font-size: 2.5rem; }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid var(--border);
+    padding: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 3px;
+  }
+
+  .footer-logo span { color: var(--red); }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--red); }
+
+  .footer-copy {
+    font-size: 0.8rem;
+    color: var(--gray);
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+  }
+
+  /* WHATSAPP FLOAT */
+  .whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 999;
+    width: 56px;
+    height: 56px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    transition: all 0.3s;
+    animation: bounce 3s infinite;
+  }
+
+  .whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  /* MOBILE NAV */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--black);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+  }
+
+  .mobile-menu.active { display: flex; }
+
+  .mobile-menu a {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+    color: var(--white);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .mobile-menu a:hover { color: var(--red); }
+
+  .mobile-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--gray);
+    background: none;
+    border: none;
+  }
+
+  /* JOIN FORM */
+  .join-section { background: var(--black); }
+
+  .join-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  .join-form-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 40px;
+  }
+
+  .form-header {
+    margin-bottom: 32px;
+  }
+
+  .form-header h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+
+  .form-header p {
+    font-size: 0.9rem;
+    color: var(--gray);
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 8px;
+  }
+
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    background: var(--dark);
+    border: 1px solid var(--border);
+    color: var(--white);
+    padding: 12px 16px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.95rem;
+    outline: none;
+    transition: border-color 0.2s;
+    appearance: none;
+  }
+
+  .form-group input:focus,
+  .form-group select:focus,
+  .form-group textarea:focus {
+    border-color: var(--red);
+  }
+
+  .form-group textarea {
+    height: 90px;
+    resize: vertical;
+  }
+
+  .form-group select option {
+    background: var(--dark);
+    color: var(--white);
+  }
+
+  .submit-btn {
+    width: 100%;
+    background: var(--red);
+    color: var(--white);
+    border: none;
+    padding: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+  }
+
+  .submit-btn:hover {
+    background: var(--dark-red);
+    transform: translateY(-2px);
+  }
+
+  .form-note {
+    font-size: 0.75rem;
+    color: var(--gray);
+    margin-top: 12px;
+    text-align: center;
+  }
+
+  .success-msg {
+    display: none;
+    background: rgba(37,211,102,0.1);
+    border: 1px solid rgba(37,211,102,0.3);
+    color: #25D366;
+    padding: 14px;
+    margin-top: 16px;
+    font-family: 'Barlow Condensed', sans-serif;
+    letter-spacing: 1px;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .join-info {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .join-info-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 24px;
+    transition: border-color 0.3s;
+  }
+
+  .join-info-card:hover { border-color: var(--red); }
+
+  .join-info-card.featured-info {
+    border-color: var(--gold);
+    background: rgba(201,168,76,0.05);
+  }
+
+  .join-info-icon {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+  }
+
+  .join-info-card h4 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+  }
+
+  .join-info-card p {
+    font-size: 0.85rem;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    .hero { padding: 100px 20px 60px; }
+    .hero h1 { font-size: 4rem; }
+    .hero-stats { display: none; }
+
+    section { padding: 60px 20px; }
+
+    .about-grid,
+    .contact-grid,
+    .supp-inner,
+    .event-grid,
+    .join-grid { grid-template-columns: 1fr; gap: 40px; }
+
+    .plans-grid,
+    .services-grid { grid-template-columns: 1fr; }
+
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: auto;
+    }
+
+    .gallery-item:first-child {
+      grid-row: span 1;
+    }
+
+    footer { flex-direction: column; text-align: center; }
+
+    .event-card { padding: 32px 24px; }
+    .supp-inner { padding: 32px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">POWER<span>HOUSE</span></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#membership">Membership</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#supplements">Supplements</a></li>
+    <li><a href="#event">Events</a></li>
+    <li><a href="#join">Join</a></li>
+    <li><a href="#contact" class="nav-cta">Join Now</a></li>
+  </ul>
+  <div class="hamburger" onclick="openMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" onclick="closeMenu()">✕</button>
+  <a href="#about" onclick="closeMenu()">About</a>
+  <a href="#membership" onclick="closeMenu()">Membership</a>
+  <a href="#services" onclick="closeMenu()">Services</a>
+  <a href="#supplements" onclick="closeMenu()">Supplements</a>
+  <a href="#event" onclick="closeMenu()">Events</a>
+  <a href="#contact" onclick="closeMenu()">Join Now</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-lines"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Kupwara's Premier Fitness Destination</div>
+    <h1>
+      POWER<br>
+      <span class="red">HOUSE</span><br>
+      <span class="outline">GYM</span>
+    </h1>
+    <p class="hero-sub">Train Hard. Live Strong. Kupwara</p>
+    <div class="hero-buttons">
+      <a href="https://wa.me/917780XXXXXX" class="btn-primary" target="_blank">
+        💪 Join Now
+      </a>
+      <a href="#membership" class="btn-outline">View Plans</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-number">500+</div>
+      <div class="stat-label">Members</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">5+</div>
+      <div class="stat-label">Years</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">#1</div>
+      <div class="stat-label">In Kupwara</div>
+    </div>
+  </div>
+</section>
+
+<!-- EVENT BANNER -->
+<div class="event-banner">
+  <div class="event-banner-text">🏆 ARM WRESTLING CHAMPIONSHIP — KUPWARA</div>
+  <div class="event-banner-date">30 MAY 2026 · ENTRY ₹599</div>
+  <a href="#event" class="btn-primary" style="padding: 10px 24px; font-size:0.85rem;">Register Now</a>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-grid">
+    <div class="about-image-box">
+      <div class="about-img-placeholder">
+        <span style="font-size:4rem;">💪</span>
+        <div class="champion-badge">
+          <div class="trophy">🏅</div>
+          <p>MR KASHMIR<br>2024</p>
+        </div>
+      </div>
+    </div>
+    <div class="about-content">
+      <div class="section-label">About Us</div>
+      <h2 class="section-title">BUILT BY<br>CHAMPIONS</h2>
+      <p>Power House Gym Kupwara is founded and led by Basit Banday — competitive bodybuilder, fitness model, and Kashmir's own champion. We bring world-class training to Kupwara.</p>
+      <p>From beginners to competitive athletes, our gym is equipped to take you to the next level. We also run the Power House Supplement Store — your one-stop shop for all fitness nutrition needs.</p>
+      <div class="achievements">
+        <div class="achievement">MR J&K NPC 2024 — 85kg Category</div>
+        <div class="achievement">MR KASHMIR 2024 — 85kg Category</div>
+        <div class="achievement">Power House Supplement Store — Wholesale & Retail</div>
+      </div>
+      <a href="https://wa.me/917780XXXXXX" class="btn-primary" target="_blank">Talk to Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERSHIP -->
+<section class="membership" id="membership">
+  <div class="section-label">Membership Plans</div>
+  <h2 class="section-title">CHOOSE YOUR PLAN</h2>
+  <div class="plans-grid">
+    <div class="plan">
+      <div class="plan-name">Basic</div>
+      <div class="plan-duration">1 Month</div>
+      <div class="plan-price"><span>₹</span>XXX</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Gym Access</li>
+        <li>All Equipment</li>
+        <li>Locker Facility</li>
+        <li>General Guidance</li>
+      </ul>
+      <a href="https://wa.me/917780XXXXXX" class="plan-btn">Get Started</a>
+    </div>
+    <div class="plan featured">
+      <div class="plan-popular">Most Popular</div>
+      <div class="plan-name">Standard</div>
+      <div class="plan-duration">3 Months</div>
+      <div class="plan-price"><span>₹</span>XXX</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Everything in Basic</li>
+        <li>Diet Consultation</li>
+        <li>Progress Tracking</li>
+        <li>Supplement Discount</li>
+      </ul>
+      <a href="https://wa.me/917780XXXXXX" class="plan-btn">Get Started</a>
+    </div>
+    <div class="plan">
+      <div class="plan-name">Premium</div>
+      <div class="plan-duration">6 Months</div>
+      <div class="plan-price"><span>₹</span>XXX</div>
+      <div class="plan-divider"></div>
+      <ul class="plan-features">
+        <li>Everything in Standard</li>
+        <li>Personal Training</li>
+        <li>Custom Meal Plan</li>
+        <li>Event Priority Access</li>
+      </ul>
+      <a href="https://wa.me/917780XXXXXX" class="plan-btn">Get Started</a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-label">What We Offer</div>
+  <h2 class="section-title">OUR SERVICES</h2>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🏋️</div>
+      <div class="service-name">Gym Training</div>
+      <p class="service-desc">Full access to premium equipment, free weights, machines, and cardio zone. Open 7 days a week.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">👤</div>
+      <div class="service-name">Personal Training</div>
+      <p class="service-desc">One-on-one sessions with our expert trainer. Custom workout plans tailored to your goals.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🥗</div>
+      <div class="service-name">Diet Planning</div>
+      <p class="service-desc">Personalized nutrition guidance using locally available foods. Real plans, real results.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💊</div>
+      <div class="service-name">Supplement Store</div>
+      <p class="service-desc">Wholesale & retail supplements available on-site. Genuine products, expert advice.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🏆</div>
+      <div class="service-name">Competitions & Events</div>
+      <p class="service-desc">Regular fitness events, arm wrestling championships, and bodybuilding competitions.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📱</div>
+      <div class="service-name">Online Coaching</div>
+      <p class="service-desc">Can't visit daily? Get coached remotely via WhatsApp. Plans, check-ins, and support.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SUPPLEMENTS -->
+<section class="supplements" id="supplements">
+  <div class="supp-inner">
+    <div>
+      <div class="section-label">Supplement Store</div>
+      <h2 class="supp-title">POWER HOUSE<br><span>SUPPLEMENT</span> STORE</h2>
+      <p class="supp-desc">Kupwara's only dedicated fitness supplement store. We carry genuine products at the best prices — wholesale and retail both available.</p>
+      <div class="supp-tags">
+        <span class="supp-tag">Whey Protein</span>
+        <span class="supp-tag">Creatine</span>
+        <span class="supp-tag">Pre-Workout</span>
+        <span class="supp-tag">Mass Gainer</span>
+        <span class="supp-tag">BCAA</span>
+        <span class="supp-tag">Vitamins</span>
+        <span class="supp-tag">Fat Burners</span>
+      </div>
+      <a href="https://wa.me/917780XXXXXX" class="btn-primary" target="_blank">Order on WhatsApp</a>
+    </div>
+    <div class="supp-image">💊</div>
+  </div>
+</section>
+
+<!-- EVENT -->
+<section class="event" id="event">
+  <div class="section-label">Upcoming Event</div>
+  <h2 class="section-title">CHAMPIONSHIP</h2>
+  <div class="event-card">
+    <div class="event-grid">
+      <div>
+        <div class="event-title">ARM WRESTLING<br><span>CHAMPIONSHIP</span></div>
+        <div class="event-details">
+          <div class="event-detail">📅 <span><strong>30 May 2026</strong></span></div>
+          <div class="event-detail">📍 <span><strong>Power House Gym, Kupwara</strong></span></div>
+          <div class="event-detail">💰 <span>Entry Fee: <strong>₹599 per player</strong></span></div>
+          <div class="event-detail">🏆 <span>Champion Prize: <strong>₹3,000 Cash</strong></span></div>
+        </div>
+        <a href="https://wa.me/917780XXXXXX" class="btn-primary" target="_blank">Register on WhatsApp</a>
+      </div>
+      <div class="categories-grid">
+        <div style="font-family:'Barlow Condensed',sans-serif; font-size:0.75rem; letter-spacing:3px; color:var(--gray); margin-bottom:8px; text-transform:uppercase;">Weight Categories</div>
+        <div class="category"><span>40–50 kg</span></div>
+        <div class="category"><span>50–60 kg</span></div>
+        <div class="category"><span>60–70 kg</span></div>
+        <div class="category"><span>70–80 kg</span></div>
+        <div class="category"><span>80+ Open</span><span class="cat-prize">₹3,000</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+  <div class="section-label">Gallery</div>
+  <h2 class="section-title">INSIDE THE GYM</h2>
+  <div class="gallery-grid">
+    <div class="gallery-item">Gym Floor</div>
+    <div class="gallery-item">Equipment</div>
+    <div class="gallery-item">Training</div>
+    <div class="gallery-item">Supplements</div>
+    <div class="gallery-item">Events</div>
+  </div>
+  <p style="text-align:center; margin-top:24px; color:var(--gray); font-family:'Barlow Condensed',sans-serif; letter-spacing:2px; font-size:0.85rem;">
+    FOLLOW US ON INSTAGRAM 
+    <a href="https://instagram.com/basit_banday00" target="_blank" style="color:var(--red); text-decoration:none;"> @basit_banday00</a>
+  </p>
+</section>
+
+<!-- JOIN FORM SECTION -->
+<section class="join-section" id="join">
+  <div class="section-label">Start Today</div>
+  <h2 class="section-title">JOIN POWER HOUSE</h2>
+  <div class="join-grid">
+
+    <div class="join-form-box">
+      <div class="form-header">
+        <h3>Membership Enquiry</h3>
+        <p>Fill the form — we'll WhatsApp you back instantly</p>
+      </div>
+
+      <div class="form-group">
+        <label>Full Name *</label>
+        <input type="text" id="f-name" placeholder="Your name">
+      </div>
+
+      <div class="form-group">
+        <label>Phone Number *</label>
+        <input type="tel" id="f-phone" placeholder="+91 XXXXX XXXXX">
+      </div>
+
+      <div class="form-group">
+        <label>Select Plan *</label>
+        <select id="f-plan">
+          <option value="">-- Choose a Plan --</option>
+          <option value="Basic (1 Month)">Basic — 1 Month</option>
+          <option value="Standard (3 Months)">Standard — 3 Months</option>
+          <option value="Premium (6 Months)">Premium — 6 Months</option>
+          <option value="Personal Training">Personal Training</option>
+          <option value="Supplement Enquiry">Supplement Enquiry</option>
+          <option value="Event Registration">Arm Wrestling Event</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Goal (Optional)</label>
+        <select id="f-goal">
+          <option value="Not specified">-- Select Goal --</option>
+          <option value="Weight Loss">Weight Loss</option>
+          <option value="Muscle Gain">Muscle Gain</option>
+          <option value="General Fitness">General Fitness</option>
+          <option value="Competition Prep">Competition Prep</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Message (Optional)</label>
+        <textarea id="f-msg" placeholder="Any questions or special requirements..."></textarea>
+      </div>
+
+      <button class="submit-btn" onclick="submitForm()">
+        💬 Send on WhatsApp
+      </button>
+
+      <p class="form-note">* Your details go directly to the gym owner on WhatsApp</p>
+
+      <!-- SUCCESS MESSAGE -->
+      <div class="success-msg" id="successMsg">
+        ✅ WhatsApp opened! Send the message to complete your enquiry.
+      </div>
+    </div>
+
+    <div class="join-info">
+      <div class="join-info-card">
+        <div class="join-info-icon">⚡</div>
+        <h4>Instant Response</h4>
+        <p>Your enquiry goes directly to the owner via WhatsApp. Reply within minutes.</p>
+      </div>
+      <div class="join-info-card">
+        <div class="join-info-icon">🎯</div>
+        <h4>No Hidden Fees</h4>
+        <p>What you see is what you pay. Transparent pricing, no surprises.</p>
+      </div>
+      <div class="join-info-card">
+        <div class="join-info-icon">🏆</div>
+        <h4>Expert Guidance</h4>
+        <p>Trained by Mr Kashmir 2024. Real coaching from a real champion.</p>
+      </div>
+      <div class="join-info-card featured-info">
+        <div class="join-info-icon">🎪</div>
+        <h4>Arm Wrestling Event</h4>
+        <p>30 May 2026 · ₹599 Entry · ₹3,000 Prize. Register via form above!</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="section-label">Get In Touch</div>
+  <h2 class="section-title">FIND US</h2>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div class="contact-item-content">
+          <h4>Location</h4>
+          <p>Power House Gym, Kupwara, J&K</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-item-content">
+          <h4>Phone / WhatsApp</h4>
+          <p>+91 XXXXX XXXXX</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div class="contact-item-content">
+          <h4>Timings</h4>
+          <p>Mon–Sun: 6:00 AM – 9:00 PM</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📸</div>
+        <div class="contact-item-content">
+          <h4>Instagram</h4>
+          <p>@basit_banday00</p>
+        </div>
+      </div>
+      <a href="https://wa.me/917780XXXXXX" class="btn-primary" target="_blank" style="width:fit-content;">
+        💬 WhatsApp Us
+      </a>
+    </div>
+    <div class="map-placeholder">
+      <span>📍</span>
+      <p>Google Maps</p>
+      <p style="font-size:0.7rem; opacity:0.5;">Embed map here after GBP is created</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">POWER<span>HOUSE</span> GYM</div>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#membership">Plans</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 Power House Gym Kupwara. Built by Nexolink</p>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/917780XXXXXX" class="whatsapp-float" target="_blank" title="Chat on WhatsApp">💬</a>
+
+<script>
+  function openMenu() {
+    document.getElementById('mobileMenu').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    document.getElementById('mobileMenu').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // WHATSAPP FORM SUBMISSION
+  // ⚠️ Replace this number with client's actual WhatsApp number
+  const GYM_WHATSAPP = '917780XXXXXX';
+
+  function submitForm() {
+    const name    = document.getElementById('f-name').value.trim();
+    const phone   = document.getElementById('f-phone').value.trim();
+    const plan    = document.getElementById('f-plan').value;
+    const goal    = document.getElementById('f-goal').value;
+    const msg     = document.getElementById('f-msg').value.trim();
+
+    if (!name) { alert('Please enter your name'); return; }
+    if (!phone) { alert('Please enter your phone number'); return; }
+    if (!plan) { alert('Please select a plan'); return; }
+
+    const waMessage =
+      `🏋️ *NEW GYM ENQUIRY — POWER HOUSE*\n\n` +
+      `👤 *Name:* ${name}\n` +
+      `📞 *Phone:* ${phone}\n` +
+      `📋 *Plan:* ${plan}\n` +
+      `🎯 *Goal:* ${goal}\n` +
+      (msg ? `💬 *Message:* ${msg}\n` : '') +
+      `\n_Sent from powerhousegym.com_`;
+
+    const encoded = encodeURIComponent(waMessage);
+    const waURL = `https://wa.me/${GYM_WHATSAPP}?text=${encoded}`;
+
+    window.open(waURL, '_blank');
+
+    // Show success
+    document.getElementById('successMsg').style.display = 'block';
+
+    // Reset form
+    document.getElementById('f-name').value = '';
+    document.getElementById('f-phone').value = '';
+    document.getElementById('f-plan').value = '';
+    document.getElementById('f-goal').value = 'Not specified';
+    document.getElementById('f-msg').value = '';
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.plan, .service-card, .contact-item, .achievement').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
